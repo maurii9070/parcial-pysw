@@ -1,0 +1,82 @@
+<div class="container">
+    <h1 class="fw-bold text-center mt-5">Recetas</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Path</th>
+                <th>Titulo</th>
+                <th>Imagen</th>                
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(receta of recetas; track recetas.title){
+                <tr>
+                    <td>{{ receta.path }}</td>
+                    <td>{{ receta.title }}</td>
+                    <td><img [src]="receta.image" alt="imagen receta" width="200"></td>
+                    <td>
+                        <button 
+                            type="button" 
+                            class="btn btn-primary" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#exampleModal"
+                            (click)="onClickReceta(receta.path)"
+                        >
+                            Ver receta
+                          </button>
+                    </td>
+                </tr>
+            }
+                
+        </tbody>
+    </table>
+</div>
+  
+  <!-- Modal -->
+  @if(receta){
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">{{receta['Titulo de la preparacion']}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <img 
+                    [src]="receta['Imagen de la receta']" 
+                    [alt]="receta['Titulo de la preparacion']"
+                    class="img-fluid"
+                >
+              </div>
+    
+                <div>
+                    <h2>Ingredientes</h2>
+                    <ul>
+                    @for(ingrediente of receta['Ingredientes']; track ingrediente){
+                        <li>{{ ingrediente }}</li>
+                    }
+                    </ul>
+                </div>
+    
+                <div>
+                    <h2>Pasos para preparar</h2>
+                    <ol>
+                    @for(paso of receta['Pasos de preparacion']; track paso){
+                        <li>{{ paso }}</li>
+                    }
+                    </ol>
+                </div>
+    
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  }
+  
+
+<router-outlet />
